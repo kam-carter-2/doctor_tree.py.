@@ -1,0 +1,8 @@
+Design Memo – Doctor Reporting System & Emergency Queue
+-------------------------------------------------------
+
+The Doctor Reporting Tree is implemented using a binary tree because it models hierarchical relationships efficiently. Each doctor can have up to two direct reports, and traversal methods make it easy to explore the organization for different workflows. For example, preorder traversal is useful for leadership reporting—visiting supervisors before their reports. Inorder traversal provides a balanced view for system output or alphabetical organization. Postorder traversal is ideal for bottom-up reviews, such as compiling performance reports or cascading updates from lower levels upward.
+
+In contrast, the Emergency Priority Queue uses a min-heap to manage real-time patient intake. A heap is ideal for this problem because it allows the most urgent patient (smallest urgency value) to always appear at the top with O(1) access, while new insertions and removals remain efficient at O(log n). This mirrors real-world triage systems where the next patient to be treated must always be the most critical case, even as new emergencies arrive. 
+
+Together, these data structures demonstrate how software engineers can choose between trees and heaps depending on organizational versus real-time needs. Trees excel at representing structured hierarchies and supporting flexible traversal patterns, while heaps provide rapid access and reordering based on priority.
