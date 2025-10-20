@@ -1,0 +1,77 @@
+# doctor_tree.py
+# Implementation of the Doctor Reporting Tree using a Binary Tree structure
+
+class DoctorNode:
+    """Represents a doctor in the reporting structure."""
+    def __init__(self, name):
+        self.name = name
+        self.left = None
+        self.right = None
+
+
+class DoctorTree:
+    """Binary tree representing the hospital's doctor hierarchy."""
+    def __init__(self):
+        self.root = None
+
+    def insert(self, parent_name, child_name, side):
+        """Insert a doctor under a specific parent and side (left/right)."""
+        parent_node = self._find(self.root, parent_name)
+        if not parent_node:
+            print(f"Error: Parent doctor '{parent_name}' not found.")
+            return
+
+        new_node = DoctorNode(child_name)
+        if side == "left":
+            if parent_node.left is None:
+                parent_node.left = new_node
+            else:
+                print(f"Warning: Left position under '{parent_name}' is already filled.")
+        elif side == "right":
+            if parent_node.right is None:
+                parent_node.right = new_node
+            else:
+                print(f"Warning: Right position under '{parent_name}' is already filled.")
+        else:
+            print("Error: Invalid side. Choose 'left' or 'right'.")
+
+    def _find(self, node, name):
+        """Recursively search for a doctor by name."""
+        if not node:
+            return None
+        if node.name == name:
+            return node
+        left_search = self._find(node.left, name)
+        if left_search:
+            return left_search
+        return self._find(node.right, name)
+
+    # Recursive traversals
+    def preorder(self, node):
+        if not node:
+            return []
+        return [node.name] + self.preorder(node.left) + self.preorder(node.right)
+
+    def inorder(self, node):
+        if not node:
+            return []
+        return self.inorder(node.left) + [node.name] + self.inorder(node.right)
+
+    def postorder(self, node):
+        if not node:
+            return []
+        return self.postorder(node.left) + self.postorder(node.right) + [node.name]
+
+
+# Example usage
+if __name__ == "__main__":
+    tree = DoctorTree()
+    tree.root = DoctorNode("Dr. Croft")
+    tree.insert("Dr. Croft", "Dr. Goldsmith", "right")
+    tree.insert("Dr. Croft", "Dr. Phan", "left")
+    tree.insert("Dr. Phan", "Dr. Carson", "right")
+    tree.insert("Dr. Phan", "Dr. Morgan", "left")
+
+    print("Preorder:", tree.preorder(tree.root))
+    print("Inorder:", tree.inorder(tree.root))
+    print("Postorder:", tree.postorder(tree.root))
